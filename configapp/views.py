@@ -1,6 +1,36 @@
-from django.shortcuts import render,redirect
+from io import BytesIO
+from reportlab.pdfgen import canvas
+from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from configapp.form import StudentsForm,SubjectsForm
 from configapp.models import *
+import qrcode
+
+def generate_qr_najottalim(request):
+    url = "https://najottalim.uz/"
+    qr = qrcode.make(url)
+
+    buffer = BytesIO()
+    qr.save(buffer, format="PNG")
+    buffer.seek(0)
+
+    return HttpResponse(buffer.getvalue(), content_type="image/png")
+
+url = "https://example.com/group/123"  # Ссылка на группу
+qr = qrcode.make(url)
+qr.save("qrcode.png")  # Сохранение QR-кода
+
+
+def generate_pdf(request, subject_id):
+    subject = get_object_or_404(Subject, id=subject_id)
+    buffer = BytesIO()
+    p = canvas.Canvas(buffer)  # canvas теперь импортирован правильно
+    p.drawString(100, 800, f"Название группы: {subject.title}")
+    p.showPage()
+    p.save()
+
+    buffer.seek(0)
+    return HttpResponse(buffer, content_type="application/pdf")
 
 def all(request):
     subjects=Subject.objects.all()

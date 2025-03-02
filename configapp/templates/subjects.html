@@ -59,6 +59,13 @@
     <h5 class="card-title">{{item.full_name}}</h5>
        <p class="card-text">{{item.location}}</p>
       <p class="card-text">{{item.phone}}</p>
+
+     <!-- QR-код -->
+    <img src="{% url 'generate_qr' item.pk %}" alt="QR Code" width="150">
+
+    <!-- Кнопка для скачивания PDF -->
+    <a href="{% url 'generate_pdf' item.pk %}" class="btn btn-success mt-2">Скачать PDF</a>
+
     <a href="#" class="btn btn-primary">TO'LIQ MALUMOT</a>
   </div>
   <div class="card-footer text-muted">

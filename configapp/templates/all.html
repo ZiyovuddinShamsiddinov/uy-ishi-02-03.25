@@ -57,7 +57,12 @@
     {% endif %}
     <h5 class="card-title">{{item.full_name}}</h5>
       <p class="card-text">{{item.location}}</p>
-    <a href="#" class="btn btn-primary">Batafsil</a>
+        <!-- QR-код -->
+    <img src="{% url 'generate_qr_najottalim' %}" alt="QR Code Najot Talim" width="150">
+
+    <!-- Кнопка для скачивания PDF -->
+    <a href="{% url 'generate_pdf' item.pk %}" class="btn btn-success mt-2">Скачать PDF</a>
+
   </div>
   <div class="card-footer text-muted">
     {{item.created_ed | date:'Y-m-d H:i:s'}}
