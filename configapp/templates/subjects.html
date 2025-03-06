@@ -61,12 +61,12 @@
       <p class="card-text">{{item.phone}}</p>
 
      <!-- QR-код -->
-    <img src="{% url 'generate_qr' item.pk %}" alt="QR Code" width="150">
+    <img src="{% url 'generate_qr_najottalim' item.pk %}" alt="QR Code" width="150">
 
     <!-- Кнопка для скачивания PDF -->
     <a href="{% url 'generate_pdf' item.pk %}" class="btn btn-success mt-2">Скачать PDF</a>
 
-    <a href="#" class="btn btn-primary">TO'LIQ MALUMOT</a>
+    <a href="{% url 'student_about' item.pk %}" class="btn btn-primary">TO'LIQ MALUMOT</a>
   </div>
   <div class="card-footer text-muted">
     {{item.created_ed | date:'Y-m-d H:i:s'}}

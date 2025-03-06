@@ -2,17 +2,6 @@ import re
 from django import forms
 from django.core.exceptions import ValidationError
 from .models import Student,Subject
-
-# class StudentsForm(forms.ModelForm):
-#     class Meta:
-#         fields=['full_name','phone','location','subject']
-#         widgets={
-#             'full_name':forms.TextInput(attrs={'class':'form-control'}),
-#             'phone': forms.TextInput(attrs={'class': 'form-control'}),
-#             'location':forms.Textarea(attrs={'class':'form-control'}),
-#             'subject':forms.Select(attrs={'class':'form-control'}),
-#         }
-
 class StudentsForm(forms.ModelForm):
     class Meta:
         model = Student
