@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from configapp.form import StudentsForm,SubjectsForm
+from configapp.form import StudentsForm, SubjectsForm
 from configapp.models import *
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
@@ -18,6 +18,7 @@ def generate_qr_najottalim(request):
     buffer.seek(0)
 
     return HttpResponse(buffer.getvalue(), content_type="image/png")
+
 
 url = "https://example.com/group/123"  # Ссылка на группу
 qr = qrcode.make(url)
@@ -53,24 +54,26 @@ def generate_pdf(request, subject_id):
 
 
 def all(request):
-    subjects=Subject.objects.all()
-    students=Student.objects.all()
+    subjects = Subject.objects.all()
+    students = Student.objects.all()
 
-    context={
-        'subjects':subjects,
-        'students':students,
+    context = {
+        'subjects': subjects,
+        'students': students,
     }
-    return render(request,'all.html',context=context)
+    return render(request, 'all.html', context=context)
 
-def subjects(request,subject_id):
-    students=Student.objects.filter(subject_id=subject_id)
-    subjects=Subject.objects.all()
 
-    context={
-        'subjects':subjects,
-        'students':students,
+def subjects(request, subject_id):
+    students = Student.objects.filter(subject_id=subject_id)
+    subjects = Subject.objects.all()
+
+    context = {
+        'subjects': subjects,
+        'students': students,
     }
-    return render(request,'subjects.html',context=context)
+    return render(request, 'subjects.html', context=context)
+
 
 def add_subjects(request):
     # print("token = = ",get_token(request)) token tutib olish
@@ -81,7 +84,8 @@ def add_subjects(request):
             return redirect('home')
     else:
         form = SubjectsForm()
-    return render(request,'add_subject.html',{'form':form})
+    return render(request, 'add_subject.html', {'form': form})
+
 
 def add_students(request):
     # print("token = = ",get_token(request)) token tutib olish
@@ -92,31 +96,31 @@ def add_students(request):
             return redirect('home')
     else:
         form = StudentsForm()
-    return render(request,'add_student.html',{'form':form})
+    return render(request, 'add_student.html', {'form': form})
 
-def update_students(request,subject_id):
-    student=get_object_or_404(Student, id=subject_id)
+
+def update_students(request, subject_id):
+    student = get_object_or_404(Student, id=subject_id)
     if request.method == "POST":
-        form = StudentsForm(request.POST,instance=student)
+        form = StudentsForm(request.POST, instance=student)
         if form.is_valid():
             form.save()
             return redirect('home')
     else:
         form = StudentsForm(instance=student)
 
-    return render(request,'update_student.html',{'form':form,"student":student})
+    return render(request, 'update_student.html', {'form': form, "student": student})
 
-def delete_new(request,subject_id):
-    new=get_object_or_404(Student, id=subject_id)
-    if request.method == "POST":
-        new.delete()
-        return redirect('home')
+
+def delete_student(request, subject_id):
+    new = get_object_or_404(Student, id=subject_id)
+    new.delete()
     return redirect('home')
 
-def student_about(request,subject_id):
-    student=get_object_or_404(Student,pk=subject_id)
-    context={
-        'student':student,
-    }
-    return render(request,'student_about.html',context=context)
 
+def student_about(request, subject_id):
+    student = get_object_or_404(Student, pk=subject_id)
+    context = {
+        'student': student,
+    }
+    return render(request, 'student_about.html', context=context)

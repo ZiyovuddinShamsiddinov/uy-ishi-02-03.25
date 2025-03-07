@@ -63,6 +63,8 @@
     <!-- Кнопка для скачивания PDF -->
     <a href="{% url 'generate_pdf' item.pk %}" class="btn btn-success mt-2">Скачать PDF</a>
     <a href="{% url 'student_about' item.pk %}" class="btn btn-success mt-2">Batafsil</a>
+    <a href="{% url 'delete_student' item.pk %}" class="btn btn-success mt-2">Delete</a>
+
 
   </div>
   <div class="card-footer text-muted">
