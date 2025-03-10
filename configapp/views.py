@@ -7,7 +7,9 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
 from io import BytesIO
 import qrcode
-
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from .models import Student, Subject
 
 def generate_qr_najottalim(request):
     url = "https://najottalim.uz/"
@@ -124,3 +126,50 @@ def student_about(request, subject_id):
         'student': student,
     }
     return render(request, 'student_about.html', context=context)
+
+
+
+# 📌 1. Barcha talabalar ro‘yxati
+class StudentListView(ListView):
+    model = Student
+    template_name = 'all.html'
+    context_object_name = 'students'
+
+# 📌 2. Bitta talaba haqida ma'lumot
+class StudentDetailView(DetailView):
+    model = Student
+    template_name = 'student_about.html'
+    context_object_name = 'student'
+
+# 📌 3. Talaba qo‘shish
+class StudentCreateView(CreateView):
+    model = Student
+    form_class = StudentsForm
+    template_name = 'add_student.html'
+    success_url = reverse_lazy('students_list')
+
+# 📌 4. Talabani yangilash
+class StudentUpdateView(UpdateView):
+    model = Student
+    form_class = StudentsForm
+    template_name = 'update_student.html'
+    success_url = reverse_lazy('students_list')
+
+# 📌 5. Talabani o‘chirish
+class StudentDeleteView(DeleteView):
+    model = Student
+    template_name = 'delete_student.html'
+    success_url = reverse_lazy('students_list')
+
+# 📌 6. Fanlar ro‘yxati
+class SubjectListView(ListView):
+    model = Subject
+    template_name = 'subjects.html'
+    context_object_name = 'subjects'
+
+# 📌 7. Fan qo‘shish
+class SubjectCreateView(CreateView):
+    model = Subject
+    form_class = SubjectsForm
+    template_name = 'add_subject.html'
+    success_url = reverse_lazy('subjects_list')
